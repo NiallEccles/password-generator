@@ -1,0 +1,140 @@
+<div class="flex flex-col md:flex-row max-w-5xl mx-auto mt-10">
+  <div class="card shadow flex-1 p-5 mr-3" [formGroup]="pwForm">
+    <div class="card-body">
+      <h2 class="card-title">Settings</h2>
+      <div class="form-control pt-3">
+        <label class="label">
+          <span class="label-text">Length</span>
+          <span class="label-text">{{ pwForm.controls.pw_length.value }}</span>
+        </label>
+        <input
+          type="range"
+          min="8"
+          max="100"
+          class="range"
+          formControlName="pw_length"
+        />
+      </div>
+      <div class="form-control pt-3">
+        <label class="cursor-pointer label">
+          <span class="label-text">Include Symbols</span>
+          <input
+            type="checkbox"
+            checked="checked"
+            class="toggle"
+            formControlName="include_symbols"
+          />
+        </label>
+      </div>
+      <div class="form-control pt-3">
+        <label class="cursor-pointer label">
+          <span class="label-text">Include Numbers</span>
+          <input
+            type="checkbox"
+            checked="checked"
+            class="toggle"
+            formControlName="include_numbers"
+          />
+        </label>
+      </div>
+      <div class="form-control pt-3">
+        <label class="cursor-pointer label">
+          <span class="label-text">Include Lowercase Characters</span>
+          <input
+            type="checkbox"
+            checked="checked"
+            class="toggle"
+            formControlName="include_lowercase"
+          />
+        </label>
+      </div>
+      <div class="form-control pt-3">
+        <label class="cursor-pointer label">
+          <span class="label-text">Include Uppercase Characters</span>
+          <input
+            type="checkbox"
+            checked="checked"
+            class="toggle"
+            formControlName="include_uppercase"
+          />
+        </label>
+      </div>
+      <div class="form-control pt-3">
+        <label class="cursor-pointer label">
+          <span class="label-text">Exclude Similar Characters</span>
+          <input
+            type="checkbox"
+            checked="checked"
+            class="toggle"
+            formControlName="exclude_similar"
+          />
+        </label>
+      </div>
+      <div class="form-control pt-3">
+        <label class="cursor-pointer label">
+          <span class="label-text">Exclude Ambiguous Characters</span>
+          <input
+            type="checkbox"
+            checked="checked"
+            class="toggle"
+            formControlName="exclude_ambiguous"
+          />
+        </label>
+      </div>
+      <div class="form-control pt-3">
+        <label class="label">
+          <span class="label-text">Amount</span>
+          <span class="label-text">{{ pwForm.controls.pw_amount.value }}</span>
+        </label>
+        <input
+          type="range"
+          min="1"
+          max="100"
+          class="range"
+          formControlName="pw_amount"
+        />
+      </div>
+    </div>
+    <button
+      class="btn btn-active"
+      role="button"
+      aria-pressed="true"
+      (click)="generate()"
+    >
+      Generate
+    </button>
+  </div>
+  <div class="card shadow flex-1 p-5">
+    <div class="card-body">
+      <h2 class="card-title">Passwords</h2>
+      <ul
+        class="
+          menu
+          overflow-y-auto
+          w-full
+          bg-base-100
+          text-base-content
+          overflow-y-scroll
+        "
+        style="max-height: 30rem"
+      >
+        <li
+          *ngFor="let pw of generatedPw; let i = index"
+          (click)="copyMessage(pw, i)"
+        >
+          <a *ngIf="copiedIndex !== i">{{ pw }}</a>
+          <a *ngIf="copiedIndex === i">Copied!</a>
+        </li>
+      </ul>
+    </div>
+    <button
+      class="btn btn-active"
+      role="button"
+      aria-pressed="true"
+      *ngIf="generatedPw.length > 1"
+      (click)="copyAll()"
+    >
+      {{copyAllText}}
+    </button>
+  </div>
+</div>
